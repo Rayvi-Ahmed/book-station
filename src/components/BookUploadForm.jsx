@@ -1,75 +1,132 @@
 import React from "react";
+import { useForm, } from "react-hook-form"
+import Swal from "sweetalert2";
 
 const BookUploadForm = () => {
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+
+const onSubmit=data=>{
+  console.log(data)
+
+  fetch('http://localhost:3000/allBooks',
+  {
+    method:"POST",
+    headers:{
+    "content-type":"application/json"
+    },
+    body:JSON.stringify(data)
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    if(data.acknowledged===true){
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Book has been added",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  })
+
+  reset()
+}
+
   return (
     <div className="p-3 bg-light">
-      <form class="row g-3">
+      <form onSubmit={handleSubmit(onSubmit)}  class="row g-3">
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">
-            Email
+       Book Name
           </label>
-          <input type="email" class="form-control" id="inputEmail4" />
+          <input {...register("Bookname", { required: true })}type="text" class="form-control" id="inputEmail4" />
         </div>
+
         <div class="col-md-6">
           <label for="inputPassword4" class="form-label">
-            Password
+           Author Name
           </label>
-          <input type="password" class="form-control" id="inputPassword4" />
+          <input {...register("authorName",{require:true})} type="text" class="form-control" id="inputPassword4" />
         </div>
         <div class="col-12">
           <label for="inputAddress" class="form-label">
-            Address
+      Description
           </label>
-          <input
+          <textarea
+          {...register("description",{require:true})}
             type="text"
             class="form-control"
             id="inputAddress"
-            placeholder="1234 Main St"
+
           />
         </div>
         <div class="col-12">
           <label for="inputAddress2" class="form-label">
-            Address 2
+        Publisher
           </label>
           <input
+            {...register("publisher",{require:true})}
             type="text"
             class="form-control"
             id="inputAddress2"
-            placeholder="Apartment, studio, or floor"
+  
+          />
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">
+    Image URL
+          </label>
+          <input
+           {...register("ImageURL",{require:true})}
+            type="text"
+            class="form-control"
+            id="inputAddress2"
+      
           />
         </div>
         <div class="col-md-6">
           <label for="inputCity" class="form-label">
-            City
+            Book Origin
           </label>
-          <input type="text" class="form-control" id="inputCity" />
+          <input
+             {...register("bookOrgin",{require:true})}
+          type="text" 
+          class="form-control" 
+          id="inputCity" />
         </div>
         <div class="col-md-4">
           <label for="inputState" class="form-label">
-            State
+       Books Type
           </label>
-          <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
+          <select {...register("bookType",{require:true})} 
+          id="inputState" class="form-select">
+            <option selected>Detective Thriler</option>
+            <option>Sci-Fi</option>
+            <option>Crime Thriller</option>
+            <option>Comics</option>
+            <option>Spy</option>
+            <option>Science</option>
+            <option>Romantic</option>
+            <option>Sports</option>
+            <option>Entartainment</option>
+            <option>Educational</option>
           </select>
         </div>
         <div class="col-md-2">
           <label for="inputZip" class="form-label">
-            Zip
+        Price
           </label>
-          <input type="text" class="form-control" id="inputZip" />
+          <input 
+          {...register("price",{require:true})}
+          type="number" class="form-control" 
+          id="inputZip" />
         </div>
         <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck" />
-            <label class="form-check-label" for="gridCheck">
-              Check me out
-            </label>
-          </div>
         </div>
         <div class="col-12">
-          <button type="submit" class="btn btn-primary">
-            Sign in
+          <button type="submit" className="btn btn-block btn-secondary">
+           Add Books
           </button>
         </div>
       </form>
