@@ -34,7 +34,7 @@ const onSubmit=data=>{
 }
 
   return (
-    <div className="p-3 bg-light">
+    <div className="p-3 bg-light rounded-lg shadow-lg">
       <form onSubmit={handleSubmit(onSubmit)}  class="row g-3">
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">

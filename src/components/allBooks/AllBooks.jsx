@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BookCard from "./BookCard";
 
 const AllBooks = () => {
+
+
+  // Books State
+const [books,setBooks]=useState([])
+
+
+// Fething books from database
+    useEffect(()=>{
+      fetch('http://localhost:3000/bookShow')
+    .then(res=>res.json())
+    .then(data=>setBooks(data))
+
+    },[])
+
+
   return (
     <div className="container mt-5">
       <div className="m-auto" style={{ width: "max-content" }}>
@@ -34,10 +49,14 @@ const AllBooks = () => {
         </div>
       </div>
       <div className="row row-cols-1 row-cols-md-3 g-4">
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
+{
+
+          books.map(book=><BookCard
+          key={book._id}
+          book={book}
+          ></BookCard>)
+}
+       
       </div>
       <nav aria-label="Page navigation example m-auto text-center">
         <ul className="pagination justify-content-center">
