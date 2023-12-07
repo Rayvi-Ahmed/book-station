@@ -38,6 +38,7 @@ if(data.deletedcount>0){
 
 }
 })
+
     }
   });
 

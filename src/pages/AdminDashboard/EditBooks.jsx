@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 const EditBooks = () => {
   const {id}= useParams()
+  console.log(id)
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
 
@@ -19,9 +20,9 @@ const EditBooks = () => {
       },
       body:JSON.stringify(data)
     })
-    .then(res=>res.json())
+    .then(res=>res.json())  
     .then(data=>{
-      if(data.modifycount===true){
+      if(data.modifiedCount>0){
         Swal.fire({
           position: "top-end",
           icon: "success",

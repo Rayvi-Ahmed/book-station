@@ -4,16 +4,15 @@ import { Link } from "react-router-dom";
 const BookCard = ({book}) => {
 const {
   Bookname,
-authorName,
-description,
-publisher,
-ImageURL,
-bookOrgin,
-bookType,
-price
+  authorName,
+  description,
+  publisher,
+  ImageURL,
+  bookOrgin,
+  bookType,
+  price,
+  _id
 }=book
-
-
 
   return (
     <div class="col">
@@ -33,7 +32,7 @@ price
           <p className="card-text">{bookType}</p>
         </div>
         <div class="card-footer">
-          <Link to="details/34" className="text-decoration-none">
+          <Link to={`details/${_id}`} className="text-decoration-none">
             See details
           </Link>
         </div>
